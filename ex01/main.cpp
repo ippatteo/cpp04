@@ -1,35 +1,37 @@
+#include "Animal.hpp"
+#include "Dog.hpp"
+#include "Cat.hpp"
 
-#include "ScavTrap.hpp"
+int main()
+{
+	// Test individual Dog and Cat creation and deletion
+	const Animal* j = new Dog();
+	const Animal* i = new Cat();
+	delete j; // should not create a leak
+	delete i;
 
+	// Create an array of Animal objects
+	const int numAnimals = 4;
+	Animal* animals[numAnimals];
 
-int main() {
-    // Test della classe ClapTrap
-    std::cout << "Testing ClapTrap" << std::endl;
-    ClapTrap clap1("Clappy");
-    ClapTrap clap2;
-    clap2 = clap1;
+	// Fill half with Dogs and half with Cats
+	for (int i = 0; i < numAnimals / 2; ++i)
+		animals[i] = new Dog();
+	for (int i = numAnimals / 2; i < numAnimals; ++i)
+		animals[i] = new Cat();
 
-    clap1.attack("Enemy");
-    clap1.takeDamage(5);
-    clap1.beRepaired(3);
+	// Test deep copy
+	Dog originalDog;
+	originalDog.setDogIdeas("Chase the ball", 0);
+	Dog copiedDog = originalDog;
+	copiedDog.setDogIdeas("Sleep", 0);
 
-    ClapTrap clap3(clap1);
-    clap3.attack("Another Enemy");
+	std::cout << "Original Dog Idea: " << originalDog.getDogIdeas(0) << std::endl;
+	std::cout << "Copied Dog Idea: " << copiedDog.getDogIdeas(0) << std::endl;
 
-    std::cout << "\nTesting ScavTrap" << std::endl;
-    // Test della classe ScavTrap
-    ScavTrap scav1("Scavy");
-    scav1.attack("Big Enemy");
-    scav1.takeDamage(20);
-    scav1.beRepaired(15);
-    scav1.guardGate();
+	// Delete all animals
+	for (int i = 0; i < numAnimals; ++i)
+		delete animals[i];
 
-    ScavTrap scav2(scav1);
-    scav2.attack("Small Enemy");
-
-    ScavTrap scav3;
-    scav3 = scav1;
-    scav3.guardGate();
-
-    return 0;
+	return 0;
 }

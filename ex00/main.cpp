@@ -1,27 +1,40 @@
-#include "ClapTrap.hpp"
+#include "Animal.hpp"
+#include "Dog.hpp"
+#include "Cat.hpp"
+#include "WrongAnimal.hpp"
+#include "WrongCat.hpp"
 
-int main() {
-    // Test del costruttore di default
-    ClapTrap defaultClap;
-    defaultClap.attack("Enemy");
-    defaultClap.takeDamage(5);
-    defaultClap.beRepaired(3);
+int main()
+{
+	// Testing Animal, Dog, and Cat
+	const Animal* meta = new Animal();
+	const Animal* dog = new Dog();
+	const Animal* cat = new Cat();
 
-    // Test del costruttore con nome
-    ClapTrap namedClap("Clappy");
-    namedClap.attack("Another Enemy");
-    namedClap.takeDamage(8);
-    namedClap.beRepaired(5);
-    namedClap.attack("Another Enemy");
+	std::cout << "Animal type: " << meta->getType() << std::endl;
+	std::cout << "Dog type: " << dog->getType() << std::endl;
+	std::cout << "Cat type: " << cat->getType() << std::endl;
 
-    // Test della copia
-    ClapTrap copiedClap(namedClap);
-    copiedClap.attack("Test Target");
+	meta->makeSound();
+	dog->makeSound();
+	cat->makeSound();
 
-    // Test dell'assegnazione
-    ClapTrap assignedClap;
-    assignedClap = namedClap;
-    assignedClap.beRepaired(2);
+	delete meta;
+	delete dog;
+	delete cat;
 
-    return 0;
+	// Testing WrongAnimal and WrongCat
+	const WrongAnimal* wrongMeta = new WrongAnimal();
+	const WrongAnimal* wrongCat = new WrongCat();
+
+	std::cout << "WrongAnimal type: " << wrongMeta->getType() << std::endl;
+	std::cout << "WrongCat type: " << wrongCat->getType() << std::endl;
+
+	wrongMeta->makeSound();
+	wrongCat->makeSound();
+
+	delete wrongMeta;
+	delete wrongCat;
+
+	return 0;
 }
